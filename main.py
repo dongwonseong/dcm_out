@@ -30,10 +30,6 @@ if __name__ == "__main__":
     query_results = db.execute_query(query)
     db.close()
 
-    # test = 'SB'
-    # main(test)
-
-
     for result in query_results:
         type_value = result['TYPE']
         print(type_value)
