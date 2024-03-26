@@ -11,7 +11,7 @@ class DatabaseService:
     def execute_query_for_type(self, type_value):
         self.db.connect()
         today = datetime.now().strftime('%Y%m%d')
-        query = (f"SELECT * FROM DCM_DAILY WHERE bond_type = '{type_value}' and issue_date = '20240322' ORDER BY issue_date asc")
+        query = (f"SELECT * FROM DCM_DAILY WHERE bond_type = '{type_value}' and issue_date = '{today}' ORDER BY issue_date asc")
         query_results = self.db.execute_query(query)
 
         self.db.close()
