@@ -1,11 +1,16 @@
 from dotenv import load_dotenv
 from util.dbConnect import DatabaseConnector
 from excel.parser import ExcelProcess
+from util.logMaster import Logger
+
 
 load_dotenv()
 
 def main(type_value):
-    print(type_value)
+
+    log = Logger('EXCEL')
+    log.line()
+    log.info(f"{type_value} Excel Parsing Start")
 
     if type_value == 'ABS':
         excel = ExcelProcess(type_value)
@@ -22,6 +27,9 @@ def main(type_value):
     else:
         return None
 
+    log.info(f" {type_value} Excel Parsing Success !")
+
+
 if __name__ == "__main__":
     db = DatabaseConnector()
     db.connect()
@@ -32,5 +40,4 @@ if __name__ == "__main__":
 
     for result in query_results:
         type_value = result['TYPE']
-        print(type_value)
         main(type_value)

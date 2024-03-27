@@ -1,10 +1,10 @@
-import pandas as pd
 import os
 import re
 from util.dbService import DatabaseService
 from dotenv import load_dotenv
 from openpyxl import load_workbook
 from openpyxl.styles import Font, PatternFill, Color, numbers, Alignment
+from util.logMaster import Logger
 
 load_dotenv()
 class ExcelProcess:
@@ -13,6 +13,7 @@ class ExcelProcess:
         dbService = DatabaseService()
         self.path = os.getenv('EXCEL_PATH')
         self.data = dbService.execute_query_for_type(type)
+        self.log = Logger(type)
 
         # 증권사 이름 맵핑 예외 추가 될 때 마다 추가
         self.name_mapping = {
