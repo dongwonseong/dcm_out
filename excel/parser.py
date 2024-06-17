@@ -9,10 +9,10 @@ from util.logMaster import Logger
 load_dotenv()
 class ExcelProcess:
 
-    def __init__(self, type):
+    def __init__(self, type, date):
         dbService = DatabaseService()
         self.path = os.getenv('EXCEL_PATH')
-        self.data = dbService.execute_query_for_type(type)
+        self.data = dbService.execute_query_for_type(type, date)
         self.log = Logger(type)
 
         # 증권사 이름 맵핑 예외 추가 될 때 마다 추가
@@ -131,7 +131,6 @@ class ExcelProcess:
                     cell.value = value
 
                     col_idx += 1
-
 
         book.save(self.path)
 

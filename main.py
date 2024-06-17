@@ -2,42 +2,32 @@ from dotenv import load_dotenv
 from util.dbConnect import DatabaseConnector
 from excel.parser import ExcelProcess
 from util.logMaster import Logger
-
+import argparse
 
 load_dotenv()
 
-def main(type_value):
+
+def main(type_value, date):
 
     log = Logger('EXCEL')
     log.line()
     log.info(f"{type_value} Excel Parsing Start")
 
-    if type_value == 'ABS':
-        excel = ExcelProcess(type_value)
-        excel.excel_process()
-
-    elif type_value == 'FB':
-        excel = ExcelProcess(type_value)
-        excel.excel_process()
-
-    elif type_value == 'SB':
-        excel = ExcelProcess(type_value)
-        excel.excel_process()
-
-    else:
-        return None
+    excel = ExcelProcess(type_value, date)
+    excel.excel_process()
 
     log.info(f" {type_value} Excel Parsing Success !")
 
 
 if __name__ == "__main__":
-    db = DatabaseConnector()
-    db.connect()
+    parser = argparse.ArgumentParser(description="Process some integers.")
+    parser.add_argument('-d', '--date', help="Date parameter")
+    parser.add_argument('-t', '--type', help="type")
+    args = parser.parse_args()
 
-    query = ("SELECT TYPE FROM DCM_DAILY_LIST GROUP BY type")
-    query_results = db.execute_query(query)
-    db.close()
-
-    for result in query_results:
-        type_value = result['TYPE']
-        main(type_value)
+    if args.type == 'daily':
+        types = ['ABS', 'SB', 'FB']
+        for type in types:
+            main(type, args.date)
+    else:
+        main(args.type, args.date)

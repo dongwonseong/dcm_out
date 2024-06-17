@@ -10,12 +10,12 @@ class DatabaseService:
         self.db = DatabaseConnector()
         self.log = Logger('MYSQL')
 
-    def execute_query_for_type(self, type_value):
+    def execute_query_for_type(self, type_value, date):
         self.db.connect()
         today = datetime.now().strftime('%Y%m%d')
         query = (f"SELECT * "
                  f"FROM DCM_DAILY "
-                 f"WHERE bond_type = '{type_value}' and issue_date = '{today}' "
+                 f"WHERE bond_type = '{type_value}' and issue_date = '{date}' "
                  f"ORDER BY issue_date asc")
 
         query_results = self.db.execute_query(query)
