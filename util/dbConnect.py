@@ -1,9 +1,8 @@
 import pymysql
 from dotenv import load_dotenv
 import os
-
-# 환경 변수 로드
 load_dotenv()
+
 
 class DatabaseConnector:
     def __init__(self):
@@ -29,7 +28,6 @@ class DatabaseConnector:
             except pymysql.MySQLError as e:
                 print(f"Error connecting to MySQL database: {e}")
 
-
     def execute_query(self, query, params=None, query_type='read'):
         self.connect()
         with self.connection.cursor() as cursor:
@@ -40,27 +38,11 @@ class DatabaseConnector:
             else:
                 return cursor.fetchall()
 
-
     def close(self):
         if self.connection and self.connection.open:
             self.connection.close()
 
-    def loadQuery(self, query_id, date, fileName):
-        queryPath = os.getenv('QueryPath')
-        with open(queryPath, 'r', encoding='utf-8') as file:
-            queries = file.read().split("-- END --")
-        for q in queries:
-            if query_id in q:
-                queryFormat = q.strip().split('\n', 1)[1].strip()
-                query = queryFormat.format(date=date)
-                queryResult = self.execute(query)
 
-                if queryResult:
-                    return self.toCsv(queryResult, fileName)
-                else:
-                    return False
-
-        return False
 
 
 

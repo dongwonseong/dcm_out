@@ -1,5 +1,4 @@
 from dotenv import load_dotenv
-from util.dbConnect import DatabaseConnector
 from excel.parser import ExcelProcess
 from util.logMaster import Logger
 import argparse

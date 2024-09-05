@@ -1,8 +1,6 @@
-import os
-import re
+
 from util.dbConnect import DatabaseConnector
-from dotenv import load_dotenv
-from datetime import datetime, timedelta
+from datetime import datetime
 from util.logMaster import Logger
 
 class DatabaseService:
